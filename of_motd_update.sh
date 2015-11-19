@@ -1,38 +1,4 @@
 #!/bin/sh
-###############################################################################
-# PREREQUISITES: 
-# Basics really. A working shell, a few common unix utilities (wget, xwd, fmt,
-#	shuf, tail) all of which should be pretty standard. Fortune and cowsay are
-#	the only non-standard tools. Both should be available via rpmforge, or the
-#	epel extras (I built this on Centos/SL, but should run anywhere.)
-#
-# NOTES/TROUBLESHOOTING:
-# Keep in mind that Openfire runs HTTP on port 9090 and HTTPS on port 9091 by
-#	default. If the script is hanging, check that you have matched the port and
-#	protocol.
-#
-# If you're having problems with HTTPS connections, try matching the user-
-#	specified SERVERNAME variable with the hostname specified in the server's
-#	certificate, especially if you are not using the IGNORETLSCERT option.
-#
-# HTTPS posting with a verified certificate isn't tested. Mine is self-signed 
-#	since all I care about is not sending the password plaintext. It should be
-#	just fine if you change the IGNORETLSCERT flag below. 
-#
-# TODO:
-# In the cowsayfortune module we are using the 'which' command to test for
-# the availibilty of the fortune and cowsay tools, but we're not leveraging
-# the fact that we did so, and as such COULD be creating a situation where
-# we have the tool but it's not in the path. Why not load the location into
-# a variable and avoid that problem?
-#
-# I still need to verify the functionality of the HTTPS wget method with a
-# full-blown verified certificiate. I'm sure it works, but I haven't tested.
-# 
-# BUGS:
-# I'm sure there are some. I've worked out all that I've found. There's not
-#	much to go wrong here, as long as the underlying tools are sound.
-###############################################################################
 
 ###############################################################################
 # SITE SPECIFIC VARIABLES: 
@@ -42,11 +8,11 @@
 #	overengineered. I've been known to do that occasionally. We covered that.
 ###############################################################################
 
-SERVERNAME=localhost		  # Your server's hostname or IP
-SERVERPORT=9091				    # Your Openfire Server's port (http:9090,https:9091)
-USEHTTPS=1					      # Use HTTPS (0=http, 1=https)
-IGNORETLSCERT=1 			    # Ignore tls certificate validity? (0=no,1=yes)
-OFUSERNAME=admin          # Your Openfire user name
+SERVERNAME=localhost        # Your server's hostname or IP
+SERVERPORT=9091	            # Your Openfire Server's port (http:9090,https:9091)
+USEHTTPS=1                  # Use HTTPS (0=http, 1=https)
+IGNORETLSCERT=1             # Ignore tls certificate validity? (0=no,1=yes)
+OFUSERNAME=admin            # Your Openfire user name
 OFPASSWORD=S3cr3tW0rd 		# Your Openfire User's password (PLAINTEXT!!)
 
 #### DO NOT EDIT BELOW THIS LINE unless you want to mess with the actual code.
