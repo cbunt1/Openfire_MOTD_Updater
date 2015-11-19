@@ -11,9 +11,25 @@ tar -xfvz {filename.tgz}
 
 4. Execute the script! (./of_motd_update.sh)
 
-You may want to run the script via the cron scheduler. I just dropped it into my /etc/cron.hourly directory and let it go.
+NOTES/TROUBLESHOOTING:
+1. Keep in mind that Openfire runs HTTP on port 9090 and HTTPS on port 9091 by default. If the script is hanging, check that you have matched the port to the protocol.
+
+2. If you're having problems with HTTPS connections, try matching the user- specified SERVERNAME variable with the hostname specified in the server's certificate, especially if you are not using the IGNORETLSCERT option.
+
+3. HTTPS posting with a verified certificate isn't tested. Mine is self-signed since all I care about is not sending the password plaintext. It should be just fine if you change the IGNORETLSCERT flag below. 
+
+4. You may want to run the script via the cron scheduler. I just dropped it into my /etc/cron.hourly directory and let it go.
+
+TODO:
+1. In the cowsayfortune module we are using the 'which' command to test for the availibilty of the fortune and cowsay tools, but we're not leveraging the fact that we did so, and as such COULD be creating a situation where we have the tool but it's not in the path. Why not load the location into a variable and avoid that problem?
+
+1. I still need to verify the functionality of the HTTPS wget method with a  full-blown verified certificiate. I'm sure it works, but I haven't tested.
+ 
+BUGS:
+I'm sure there are some. I've worked out all that I've found. There's not much to go wrong here, as long as the underlying tools are sound.
 
 I've only tested it on a Scientific Linux (Centos/Fedora/RedHat) 6.7 system, but I can't see any reason it won't run just fine on any machine with fortune. You'll need cowsay for the whole package, but it'll run just fine without it.
 
 I know it's not much of an install document, and I'll update it at some point. This should be enough to get you started anyway!
+
 
