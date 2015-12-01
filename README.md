@@ -24,7 +24,8 @@ are back behind me somwehere, but I sure can't see them!
 
 Enjoy!
 
- **CREDITS:** 
+ **CREDITS:**
+ 
 The original Openfire MOTD mod came from	"rogi333" here: https://community.igniterealtime.org/docs/DOC-1752 This is the core of the communication with the Openfire server.
 
 The cowsay/fortune script came from CurtisK's shwelcome script, and was located here: https://github.com/centosblog/shwelcome. The shwelcome script is licensed under the MIT license.
