@@ -53,8 +53,8 @@ fi
 
 urlencode() {
 ###############################################################################
-# this urlencode script/module was Copied in full from Chris Down (cdown) 
-# at https://gist.github.com/cdown/1163649
+# This urlencode script/module was Copied in full from Chris Down (cdown) 
+#   at https://gist.github.com/cdown/1163649
 ###############################################################################
 
     local length="${#1}"
@@ -80,8 +80,13 @@ urlencode "`cat /tmp/phrase_motd`" > /tmp/phrase_motd_urlencode
 # Now we load the output into a variable that we will pass to the wget sequence
 PHRASE=`cat /tmp/phrase_motd_urlencode`
 
+############################################################################
+# The main wget push scripting was originally developed by rogi333 and
+#   published at https://community.igniterealtime.org/docs/DOC-1752
+############################################################################
+
 # Now let's feed it to the server via wget
-if [ "$USEHTTPS" -eq 0 ]	# Are we using Plain Old HTTP? (USEHTTPS=0)
+if [ "$USEHTTPS" -eq 0 ]        # Are we using Plain Old HTTP? (USEHTTPS=0)
 then
 	wget --cookies=on --keep-session-cookies --save-cookies=/tmp/cookies.txt --post-data="url=/index.jsp&login=true&username=$OFUSERNAME&password=$OFPASSWORD" http://"$SERVERNAME":"$SERVERPORT"/login.jsp -O /dev/null 2>&1 1>/dev/null 2>/dev/null
 	wget --cookies=on --load-cookies=/tmp/cookies.txt --keep-session-cookies --save-cookies=/tmp/cookies.txt --post-data="propName=plugin.motd.message&propValue="$PHRASE"&save=Guardar+Propiedad" http://"$SERVERNAME":"$SERVERPORT"/server-properties.jsp -O /dev/null 2>&1 1>/dev/null 2>/dev/null
@@ -89,7 +94,7 @@ elif [ "$IGNORETLSCERT" -eq 1 ]	# TLS w/unverified certificate?
 then
 	wget  --no-check-certificate --cookies=on --keep-session-cookies --save-cookies=/tmp/cookies.txt --post-data="url=/index.jsp&login=true&username=$OFUSERNAME&password=$OFPASSWORD" https://"$SERVERNAME":"$SERVERPORT"/login.jsp  -O /dev/null 2>&1 1>/dev/null 2>/dev/null
 	wget --no-check-certificate --cookies=on --load-cookies=/tmp/cookies.txt --keep-session-cookies --save-cookies=/tmp/cookies.txt --post-data="propName=plugin.motd.message&propValue="$PHRASE"&save=Guardar+Propiedad" https://"$SERVERNAME":"$SERVERPORT"/server-properties.jsp -O /dev/null 2>&1 1>/dev/null 2>/dev/null
-else				# Must be full-bore https w/signed certificate.
+else                            # Must be full-bore https w/signed certificate.
 	wget --cookies=on --keep-session-cookies --save-cookies=/tmp/cookies.txt --post-data="url=/index.jsp&login=true&username=$OFUSERNAME&password=$OFPASSWORD" https://"$SERVERNAME":"$SERVERPORT"/login.jsp  -O /dev/null 2>&1 1>/dev/null 2>/dev/null
 	wget --cookies=on --load-cookies=/tmp/cookies.txt --keep-session-cookies --save-cookies=/tmp/cookies.txt --post-data="propName=plugin.motd.message&propValue="$PHRASE"&save=Guardar+Propiedad" https://"$SERVERNAME":"$SERVERPORT"/server-properties.jsp -O /dev/null 2>&1 1>/dev/null 2>/dev/null
 fi
@@ -100,4 +105,4 @@ rm -f /tmp/phrase_motd /tmp/phrase_motd_urlencode 2> /dev/null
 # We're the strong, silent type, but we can at least acknowledge our operator.
 # If running via cron and you don't want the emails, comment the line below.
 echo "Openfire MOTD Script complete."
-exit 0					# Not necessary, but I'm old-school.
+exit 0					# Not strictly necessary, but I'm old-school.
